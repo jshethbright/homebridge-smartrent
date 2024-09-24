@@ -58,7 +58,7 @@ export class SmartRentPlatform implements DynamicPlatformPlugin {
     uuid: string,
     device: DeviceDataUnion,
     config: SmartRentPlatformConfig,
-    accessory?: SmartRentAccessory,
+    accessory?: SmartRentAccessory
   ) {
     // create the accessory handler for the restored accessory
     // this is imported from `platformAccessory.ts`
@@ -82,21 +82,29 @@ export class SmartRentPlatform implements DynamicPlatformPlugin {
       case 'entry_control':
         if (config.lockEnable === true) {
           Accessory = LockAccessory;
+        } else {
+          return;
         }
         break;
       case 'switch_binary':
         if (config.switchEnable === true) {
           Accessory = SwitchAccessory;
+        } else {
+          return;
         }
         break;
       case 'thermostat':
         if (config.thermostatEnable === true) {
           Accessory = ThermostatAccessory;
+        } else {
+          return;
         }
         break;
       case 'switch_multilevel':
         if (config.switchEnable === true) {
           Accessory = SwitchMultilevelAccessory;
+        } else {
+          return;
         }
         break;
       default:

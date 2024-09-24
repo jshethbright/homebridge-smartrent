@@ -87,7 +87,7 @@
   </form>
 </div>
 
-<div class="card card-body my-4"></div>
+<div class="card card-body my-4">
   <form id="configForm">
     <h5 class="card-title">Enabled Devices</h5>
     <div class="form-group">
@@ -138,10 +138,10 @@
     const loginButton = document.getElementById('loginButton');
     const logoutButton = document.getElementById('logoutButton');
 
-    const leakSensorEnable = document.getElementById('leakSensor')
-    const lockEnable = document.getElementById('lock')
-    const switchEnable = document.getElementById('switch')
-    const thermostatEnable = document.getElementById('thermostat')
+    const leakSensorEnable = document.getElementById('leakSensor');
+    const lockEnable = document.getElementById('lock');
+    const switchEnable = document.getElementById('switch');
+    const thermostatEnable = document.getElementById('thermostat');
 
     const updateLoginFormDisabled = () => {
       if (emailInput.value && passwordInput.value) {
@@ -166,9 +166,12 @@
       await homebridge.updatePluginConfig(pluginConfig);
     } else {
       unitNameInput.setAttribute('value', pluginConfig[0].unitName || '');
-      leakSensorEnable.setAttribute('value', pluginConfig[0].leakSensorEnable || '' )
-      lockEnable.setAttribute('value', pluginConfig[0].lockEnable || '' )
-      switchEnable.setAttribute('value', pluginConfig[0].switchEnable || '' )
+      leakSensorEnable.setAttribute(
+        'value',
+        pluginConfig[0].leakSensorEnable || ''
+      );
+      lockEnable.setAttribute('value', pluginConfig[0].lockEnable || '');
+      switchEnable.setAttribute('value', pluginConfig[0].switchEnable || '');
       updateLoginForm(
         pluginConfig[0].email || '',
         pluginConfig[0].password || ''

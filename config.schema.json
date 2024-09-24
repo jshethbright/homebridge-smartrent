@@ -4,7 +4,7 @@
   "singular": true,
   "customUi": true,
   "headerDisplay": "Homebridge plugin for SmartRent installations",
-  "footerDisplay": "For documentation please see [GitHub](https://github.com/bhavishyachandra/homebridge-smartrent)",
+  "footerDisplay": "For documentation please see [GitHub](https://github.com/jshethbright/homebridge-smartrent)",
   "schema": {
     "type": "object",
     "properties": {
@@ -33,6 +33,22 @@
         "type": "string",
         "required": false,
         "description": "Only necessary if you have multiple units in your SmartRent account. Get the name from the top of the More tab in the SmartRent app."
+      },
+      "leakSensorEnable": {
+        "title": "Leak Sensor Enable",
+        "type": "boolean"
+      },
+      "lockEnable": {
+        "title": "Lock Enable",
+        "type": "boolean"
+      },
+      "switchEnable": {
+        "title": "Switch Enable",
+        "type": "boolean"
+      },
+      "thermostatEnable": {
+        "title": "Thermostat Enable",
+        "type": "boolean"
       }
     }
   }

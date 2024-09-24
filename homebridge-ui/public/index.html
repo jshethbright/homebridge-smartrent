@@ -87,6 +87,45 @@
   </form>
 </div>
 
+<div class="card card-body my-4"></div>
+  <form id="configForm">
+    <h5 class="card-title">Enabled Devices</h5>
+    <div class="form-group">
+      <label for="leakSensor">Leak Sensor</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        id="leakSensor"
+        aria-describedby="enabledDevicesHelpBlock"
+      />
+      <label for="lock">Lock</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        id="lock"
+        aria-describedby="enabledDevicesHelpBlock"
+      />
+      <label for="switch">Switch</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        id="switch"
+        aria-describedby="enabledDevicesHelpBlock"
+      />
+      <label for="thermostat">Thermostat</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        id="thermostat"
+        aria-describedby="enabledDevicesHelpBlock"
+      />
+      <small id="enabledDevicesHelpBlock" class="form-text text-muted">
+        Devices to add to homebridge.
+      </small>
+    </div>
+  </form>
+</div>
+
 <script>
   (async () => {
     const configForm = document.getElementById('configForm');
@@ -98,6 +137,11 @@
     const tfaCodeInput = document.getElementById('tfaCodeInput');
     const loginButton = document.getElementById('loginButton');
     const logoutButton = document.getElementById('logoutButton');
+
+    const leakSensorEnable = document.getElementById('leakSensor')
+    const lockEnable = document.getElementById('lock')
+    const switchEnable = document.getElementById('switch')
+    const thermostatEnable = document.getElementById('thermostat')
 
     const updateLoginFormDisabled = () => {
       if (emailInput.value && passwordInput.value) {
@@ -114,7 +158,7 @@
       updateLoginFormDisabled();
     };
 
-    const pluginConfig = await homebridge.getPluginConfig();
+    const pluginConfig = await homebridge.c();
 
     // Initialize
     if (!pluginConfig.length) {
@@ -122,6 +166,9 @@
       await homebridge.updatePluginConfig(pluginConfig);
     } else {
       unitNameInput.setAttribute('value', pluginConfig[0].unitName || '');
+      leakSensorEnable.setAttribute('value', pluginConfig[0].leakSensorEnable || '' )
+      lockEnable.setAttribute('value', pluginConfig[0].lockEnable || '' )
+      switchEnable.setAttribute('value', pluginConfig[0].switchEnable || '' )
       updateLoginForm(
         pluginConfig[0].email || '',
         pluginConfig[0].password || ''
@@ -144,6 +191,18 @@
     configForm.addEventListener('input', async () => {
       if (unitNameInput.value) {
         pluginConfig[0].unitName = unitNameInput.value;
+      }
+      if (leakSensorEnable.value) {
+        pluginConfig[0].leakSensorEnable = leakSensorEnable.value;
+      }
+      if (lockEnable.value) {
+        pluginConfig[0].lockEnable = lockEnable.value;
+      }
+      if (switchEnable.value) {
+        pluginConfig[0].switchEnable = switchEnable.value;
+      }
+      if (thermostatEnable.value) {
+        pluginConfig[0].thermostatEnable = thermostatEnable.value;
       }
       await homebridge.updatePluginConfig(pluginConfig);
     });

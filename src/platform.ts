@@ -57,7 +57,8 @@ export class SmartRentPlatform implements DynamicPlatformPlugin {
   private _initAccessory(
     uuid: string,
     device: DeviceDataUnion,
-    accessory?: SmartRentAccessory
+    config: SmartRentPlatformConfig,
+    accessory?: SmartRentAccessory,
   ) {
     // create the accessory handler for the restored accessory
     // this is imported from `platformAccessory.ts`
@@ -69,24 +70,34 @@ export class SmartRentPlatform implements DynamicPlatformPlugin {
       | typeof SwitchMultilevelAccessory;
     switch (device.type) {
       case 'sensor_notification':
-        if ('leak' in device.attributes) {
-          Accessory = LeakSensorAccessory;
-        } else {
-          this.log.error(`Unknown device type: ${device.type}`);
-          return;
+        if (config.leakSensorEnable === true) {
+          if ('leak' in device.attributes) {
+            Accessory = LeakSensorAccessory;
+          } else {
+            this.log.error(`Unknown device type: ${device.type}`);
+            return;
+          }
         }
         break;
       case 'entry_control':
-        Accessory = LockAccessory;
+        if (config.lockEnable === true) {
+          Accessory = LockAccessory;
+        }
         break;
       case 'switch_binary':
-        Accessory = SwitchAccessory;
+        if (config.switchEnable === true) {
+          Accessory = SwitchAccessory;
+        }
         break;
       case 'thermostat':
-        Accessory = ThermostatAccessory;
+        if (config.thermostatEnable === true) {
+          Accessory = ThermostatAccessory;
+        }
         break;
       case 'switch_multilevel':
-        Accessory = SwitchMultilevelAccessory;
+        if (config.switchEnable === true) {
+          Accessory = SwitchMultilevelAccessory;
+        }
         break;
       default:
         this.log.error(
@@ -122,7 +133,8 @@ export class SmartRentPlatform implements DynamicPlatformPlugin {
 
     // create the accessory handler for the newly create accessory
     // this is imported from `platformAccessory.ts`
-    new Accessory(this, accessory);
+
+    new Accessory!(this, accessory);
 
     if (!accessoryExists) {
       // link the accessory to the platform
@@ -151,7 +163,7 @@ export class SmartRentPlatform implements DynamicPlatformPlugin {
       const existingAccessory = this.accessories.find(
         accessory => accessory.UUID === uuid
       );
-      this._initAccessory(uuid, device, existingAccessory);
+      this._initAccessory(uuid, device, this.config, existingAccessory);
       return uuid;
     });
 

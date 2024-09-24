@@ -6,4 +6,8 @@ export interface SmartRentPlatformConfig extends PlatformConfig {
   email: string;
   password: string;
   tfaCode?: string;
+  leakSensorEnable?: boolean;
+  lockEnable?: boolean;
+  switchEnable?: boolean;
+  thermostatEnable?: boolean;
 }

@@ -6,6 +6,6 @@ updates:
       interval: daily
       time: '04:00'
     assignees:
-      - 'bhavishyachandra'
+      - 'jshethbright'
     reviewers:
-      - 'bhavishyachandra'
+      - 'jshethbright'
